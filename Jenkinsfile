@@ -15,7 +15,7 @@ pipeline {
 
         stage('Check for errors') {
             steps {
-                cript {
+                script {
                     def logDir = '/var/log/apache2'
                     def errorFiles = sh(script: '''grep -lE '\\s(40[0-9]|50[0-9])\\s' $logDir/*.log''', returnStdout: true).trim()
 
