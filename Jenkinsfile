@@ -17,13 +17,11 @@ pipeline {
             steps {
                 script {
                     def logDir = '/var/log/apache2'
-                    def errorFiiles = sh(script: "grep -lE \" 40* /| 50* \" $logDir/*.log", returnStdout: true).trim().split('\n')
+                    def errorFiles = sh(script: "grep -lE '\\s(40[0-9]|50[0-9])\\s' $logDir/*.log && echo 'Found'", returnStdout: true).trim()
 
-                    if (errorFiles.size() > 0) {
+                    if (errorFiles.contains('Found')) {
                         echo "Alert! Errors detected in Apache2 logs:"
-                        for (file in errorFiles) {
-                            echo " - ${file}"
-                        }
+                        sh "grep -lE '\\s(40[0-9]|50[0-9])\\s' $logDir/*.log"
                     } else {
                         echo "No errors found in Apache2 logs"
                     }
