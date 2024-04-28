@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     def logDir = '/var/log/apache2'
-                    def errorFiles = sh(script: "grep -lEq '\\s(40[0-9]|50[0-9])\\s' $logDir/*.log && echo 'Found'", returnStdout: true).trim()
+                    def errorFiles = sh(script: "sudo grep -lEq '\\s(40[0-9]|50[0-9])\\s' $logDir/*.log && echo 'Found'", returnStdout: true).trim()
 
                     if (errorFiles.contains('Found')) {
                         echo "Alert! Errors detected in Apache2 logs:"
