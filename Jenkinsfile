@@ -21,7 +21,7 @@ pipeline {
         
                     if (!errorFiles.isEmpty()) {
                         echo "Alert! Errors detected in Apache2 logs:"
-                        errorFiles.eachLine { file ->
+                        errorFiles.readLines().each { file ->
                             echo file
                         }
                     } else {
