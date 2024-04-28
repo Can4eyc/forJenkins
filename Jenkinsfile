@@ -1,5 +1,7 @@
 pipeline {
-    agent Azure
+    agent {
+	label 'Azure'
+    }
 
     stages {
         stage('Install Apache') {
