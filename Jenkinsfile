@@ -15,11 +15,11 @@ pipeline {
 
         stage('Check for errors') {
             steps {
-                script {
+                cript {
                     def logDir = '/var/log/apache2'
-                    def errorFiles = sh(script: "sudo grep -lEq '\\s(40[0-9]|50[0-9])\\s' $logDir/*.log && echo 'Found'", returnStdout: true).trim()
+                    def errorFiles = sh(script: '''grep -lE '\\s(40[0-9]|50[0-9])\\s' $logDir/*.log''', returnStdout: true).trim()
 
-                    if (errorFiles.contains('Found')) {
+                    if (!errorFiles.isEmpty()) {
                         echo "Alert! Errors detected in Apache2 logs:"
                         sh "grep -lE '\\s(40[0-9]|50[0-9])\\s' $logDir/*.log"
                     } else {
